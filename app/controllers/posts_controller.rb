@@ -15,6 +15,7 @@ class PostsController < ApplicationController
   # GET /posts/new
   def new
     @post = Post.new
+    @tag = Tag.new
   end
 
   # GET /posts/1/edit
@@ -34,6 +35,7 @@ class PostsController < ApplicationController
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end
     end
+    # binding.pry
   end
 
   # PATCH/PUT /posts/1
@@ -68,6 +70,7 @@ class PostsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      params.require(:post).permit(:name, :content, :tag_ids => [])
+      # takes in tag_ids for existing tags selected, and name for tags_attributes for new tags
+      params.require(:post).permit(:name, :content, :tag_ids => [], tags_attributes: [:name])
     end
 end
